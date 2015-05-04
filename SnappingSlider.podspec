@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "SnappingSlider"
-  s.version      = "1.0.2"
+  s.version      = "1.1"
   s.summary      = "A beautiful slider control for iOS built purely upon Swift."
   s.description  = <<-DESC
                    A slider control built upon UIKitDynamic using Swift. Simple and effecient. 
