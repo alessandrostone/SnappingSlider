@@ -31,52 +31,14 @@ public class SnappingSlider: UIView {
 
     final public weak var delegate:SnappingSliderDelegate?
     final public var shouldContinueAlteringValueUntilGestureCancels:Bool = false
-    final public var incrementAndDecrementLabelFont:UIFont = UIFont(name: "TrebuchetMS-Bold", size: 18.0)! {
-        didSet {
-            
-            setNeedsLayout()
-        }
-    }
-    final public var incrementAndDecrementLabelTextColor:UIColor = UIColor.whiteColor() {
-        didSet {
-            
-            setNeedsLayout()
-        }
-    }
-    final public var incrementAndDecrementBackgroundColor:UIColor = UIColor(red:0.36, green:0.65, blue:0.65, alpha:1) {
-        didSet {
-            
-            setNeedsLayout()
-        }
-    }
-    final public var sliderColor:UIColor = UIColor(red:0.42, green:0.76, blue:0.74, alpha:1) {
-        didSet {
-            
-            setNeedsLayout()
-        }
-    }
-    final public var sliderTitleFont:UIFont = UIFont(name: "TrebuchetMS-Bold", size: 15.0)! {
-        didSet {
-            
-            setNeedsLayout()
-        }
-    }
-    final public var sliderTitleColor:UIColor = UIColor.whiteColor() {
-        didSet {
-            setNeedsLayout()
-        }
-    }
-    final public var sliderTitleText:String = "Slide Me" {
-        didSet {
-            setNeedsLayout()
-        }
-    }
-    final public var sliderCornerRadius:CGFloat = 3.0 {
-        didSet {
-            setNeedsLayout()
-        }
-    }
-    
+    final public var incrementAndDecrementLabelFont:UIFont = UIFont(name: "TrebuchetMS-Bold", size: 18.0)! { didSet { setNeedsLayout() } }
+    final public var incrementAndDecrementLabelTextColor:UIColor = UIColor.whiteColor() { didSet { setNeedsLayout() } }
+    final public var incrementAndDecrementBackgroundColor:UIColor = UIColor(red:0.36, green:0.65, blue:0.65, alpha:1) { didSet { setNeedsLayout() } }
+    final public var sliderColor:UIColor = UIColor(red:0.42, green:0.76, blue:0.74, alpha:1) { didSet { setNeedsLayout() } }
+    final public var sliderTitleFont:UIFont = UIFont(name: "TrebuchetMS-Bold", size: 15.0)! { didSet { setNeedsLayout() } }
+    final public var sliderTitleColor:UIColor = UIColor.whiteColor() { didSet { setNeedsLayout() } }
+    final public var sliderTitleText:String = "Slide Me" { didSet { setNeedsLayout() } }
+    final public var sliderCornerRadius:CGFloat = 3.0 { didSet { setNeedsLayout() } }
     
     final private let sliderContainer = UIView(frame: CGRectZero)
     final private let minusLabel = UILabel(frame: CGRectZero)
@@ -190,7 +152,10 @@ public class SnappingSlider: UIView {
                 
                 isCurrentDraggingSlider = true
                 touchesBeganPoint = sliderPanGestureRecogniser.translationInView(sliderView)
-                dynamicButtonAnimator.removeBehavior(snappingBehavior)
+                if let snapBehavior = snappingBehavior {
+                 
+                    dynamicButtonAnimator.removeBehavior(snapBehavior)
+                }
                 lastDelegateFireOffset = (bounds.size.width * 0.5) + ((touchesBeganPoint.x + touchesBeganPoint.x) * 0.40)
                 
             case .Changed:
@@ -233,7 +198,10 @@ public class SnappingSlider: UIView {
 
             case .Cancelled:
                 
-                dynamicButtonAnimator.addBehavior(snappingBehavior)
+                if let snapBehavior = snappingBehavior {
+                 
+                    dynamicButtonAnimator.addBehavior(snapBehavior)
+                }
                 isCurrentDraggingSlider = false
                 lastDelegateFireOffset = center.x
                 valueChangingTimer?.invalidate()
@@ -241,7 +209,7 @@ public class SnappingSlider: UIView {
             case .Possible:
 
                 // Swift requires at least one statement per case
-                let x = 0
+                _ = 0
             }
         }
     }
